@@ -1,0 +1,73 @@
+on: [push]
+
+name: test
+
+jobs:
+  centos:
+    container: centos:7
+    runs-on: [self-hosted, Linux, X64]
+    env:
+      TEST_STRING: "VERY_COOL_STRING"
+      TEST_STRING2: "VERY_COOL_STRING2"
+      GHA_PREEMPTIBLE: "false"
+    steps:
+    - run: hostname
+    - run: printenv
+      env:
+        TEST_STRING_RUN: "VERY_COOL_STRING3"
+    - run: df -h .
+    - run: df -h /mnt/aux
+    - run: ls -alh /mnt/aux
+    - name: Checkout tools repo
+      uses: actions/checkout@v2
+      with:
+        repository: KittyKatt/screenFetch
+        path: screenfetch
+    - run: cp screenfetch/screenfetch-dev /usr/bin/screenfetch
+    - run: chmod +x screenfetch
+    - run: screenfetch
+  ubuntu:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {tag: "bionic"}
+          - {tag: "focal"}
+          - {tag: "impish"}
+          - {tag: "hirsute"}
+    container: ubuntu:${{ matrix.tag }}
+    runs-on: [self-hosted, Linux, X64]
+    env:
+      TEST_STRING: "VERY_COOL_STRING"
+      TEST_STRING2: "VERY_COOL_STRING2"
+      MATRIX_PASS: ${{ matrix.tag }}
+      DEBIAN_FRONTEND: noninteractive
+    steps:
+    - name: Setup repository
+      uses: actions/checkout@v2
+    - run: ./out_err.sh
+    - run: hostname
+    - run: printenv
+      env:
+        TEST_STRING_RUN: "VERY_COOL_STRING3"
+    - run: df -h .
+    - run: df -h /mnt/aux
+    - run: ls -alh /mnt/aux
+    - run: echo $TEST_STRING2 > test.txt
+    - run: echo test
+    - run: echo test2
+    - run: echo test3
+    - run: echo test4
+    - run: echo test5
+    - run: echo test6
+    - run: ln -s /root/work/test.txt /root/work/test2.txt
+    - run: touch /etc/test && ln -s /etc/test /root/work/test3.txt
+    - run: ln -s /root/work/test.txt /root/work/text4.txt
+    - run: apt -qqy update && apt -qqy install neofetch iproute2 curl gnupg
+    - run: ip addr show
+    - run: neofetch
+    - uses: actions/upload-artifact@v2
+      with:
+        path: |
+          **/*.txt
+          **/plot_*.svg
