@@ -103,7 +103,7 @@ jobs:
     needs: [generate-matrix]
     strategy:
       matrix:
-        TEST_CASE: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+        TEST_CASE: ['a', 'b', 'c']
       fail-fast:
         false
 
