@@ -72,3 +72,52 @@ jobs:
         path: |
           **/*.txt
           **/plot_*.svg
+
+  generate-matrix:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:bionic
+    outputs:
+      matrix: ${{ steps.generate-matrix-yosys.outputs.matrix }}
+    steps:
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y python3
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+      - name: Checkout master
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Generate matrix
+        id: generate-matrix
+        run: |
+          matrix="$(python list.py)"
+          echo "::set-output name=matrix::$matrix"
+          echo "matrix yosys: $matrix"
+
+  tests:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:bionic
+    needs: [generate-matrix]
+    strategy:
+      matrix:
+        TEST_CASE: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+      fail-fast:
+        false
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+    - run: |
+        echo "Done ${{ matrix.TEST_CASE }}"
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
