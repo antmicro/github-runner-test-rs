@@ -121,4 +121,3 @@ jobs:
         name: plots
         path: |
           **/plot_*.svg
-
