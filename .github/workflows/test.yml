@@ -114,6 +114,8 @@ jobs:
         fetch-depth: 1
     - run: |
         echo "Done ${{ matrix.TEST_CASE }}"
+    - run: |
+        exit 1
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
