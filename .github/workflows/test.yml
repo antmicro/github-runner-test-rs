@@ -41,6 +41,7 @@ jobs:
     env:
       TEST_STRING: "VERY_COOL_STRING"
       TEST_STRING2: "VERY_COOL_STRING2"
+      GHA_SSH_TUNNEL_CONFIG_SECRET_NAME: "TEST ENV"
       MATRIX_PASS: ${{ matrix.tag }}
       DEBIAN_FRONTEND: noninteractive
     steps:
@@ -52,6 +53,7 @@ jobs:
       env:
         TEST_STRING_RUN: "VERY_COOL_STRING3"
     - run: df -h .
+    - run: echo $GHA_SSH_TUNNEL_CONFIG_SECRET_NAME
     - run: df -h /mnt/aux
     - run: ls -alh /mnt/aux
     - run: echo $TEST_STRING2 > test.txt
