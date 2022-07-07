@@ -1,6 +1,9 @@
 on: [push]
 
 name: test
+
+
+jobs:
   ubuntu:
     strategy:
       fail-fast: false
