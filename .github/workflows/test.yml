@@ -30,7 +30,7 @@ jobs:
         ln -s "$(which pip3)" "$(dirname $(which pip3))/pip"
         pip --version
         pip install -U pip
-    - uses: pyTooling/Actions/releaser/composite@umarcor/dev
+    - uses: pyTooling/Actions/releaser/composite@dev
       with:
         token: ${{ github.token }}
         tag: latest
