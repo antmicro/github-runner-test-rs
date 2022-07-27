@@ -18,23 +18,13 @@ jobs:
     env:
       TEST_STRING: "VERY_COOL_STRING"
       TEST_STRING2: "VERY_COOL_STRING2"
-      GHA_SSH_TUNNEL_CONFIG_SECRET_NAME: "TEST ENV"
       MATRIX_PASS: ${{ matrix.tag }}
       DEBIAN_FRONTEND: noninteractive
     steps:
     - name: Setup repository
       uses: actions/checkout@v2
     - run: |
-        apt update -qq
-        apt install -y python3-pip
-        ln -s "$(which pip3)" "$(dirname $(which pip3))/pip"
-        pip --version
-        pip install -U pip
-    - uses: pyTooling/Actions/releaser/composite@dev
-      with:
-        token: ${{ github.token }}
-        tag: latest
-        files: install/*
+        echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
     - uses: actions/upload-artifact@v2
       with:
         path: |
