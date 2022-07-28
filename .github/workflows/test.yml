@@ -24,7 +24,9 @@ jobs:
     - name: Setup repository
       uses: actions/checkout@v2
     - run: |
+        echo $GITHUB_STEP_SUMMARY
         echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
+        ls -la $GITHUB_STEP_SUMMARY
     - uses: actions/upload-artifact@v2
       with:
         path: |
