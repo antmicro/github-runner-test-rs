@@ -7,7 +7,11 @@ jobs:
   ubuntu:
     strategy:
       fail-fast: false
-    container: 'ghcr.io/f4pga/prjxray/ci-notexisting'
+      matrix:
+        include:
+          - {tag: "ghcr.io/f4pga/prjxray/ci"}
+          - {tag: "ghcr.io/f4pga/prjxray/ci-notexisting"}
+    container: ${{ matrix.tag }}
     runs-on: [self-hosted, Linux, X64]
     env:
       TEST_STRING: "VERY_COOL_STRING"
