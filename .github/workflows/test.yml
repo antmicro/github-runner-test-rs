@@ -4,31 +4,13 @@ name: test
 
 
 jobs:
-  ubuntu:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - {tag: "bionic"}
-          - {tag: "focal"}
-          - {tag: "impish"}
-          - {tag: "hirsute"}
-    container: ubuntu:${{ matrix.tag }}
-    runs-on: [self-hosted, Linux, X64]
-    env:
-      TEST_STRING: "VERY_COOL_STRING"
-      TEST_STRING2: "VERY_COOL_STRING2"
-      MATRIX_PASS: ${{ matrix.tag }}
-      DEBIAN_FRONTEND: noninteractive
+  CompositeLocal-Custom:
+    container: ubuntu:bionic
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+
     steps:
-    - name: Setup repository
-      uses: actions/checkout@v2
-    - run: |
-        echo $GITHUB_STEP_SUMMARY
-        echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
-        ls -la $GITHUB_STEP_SUMMARY
-    - uses: actions/upload-artifact@v2
-      with:
-        path: |
-          **/*.txt
-          **/plot_*.svg
+      - uses: actions/checkout@v3
+      - uses: ./composite
