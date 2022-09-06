@@ -14,3 +14,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./composite
+  CompositeLocal-Custom-2:
+    container: ubuntu:bionic
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./composite/rundir/
