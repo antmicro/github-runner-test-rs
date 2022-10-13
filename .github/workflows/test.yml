@@ -35,3 +35,12 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./composite2
 
+  CompositeLocal-Custom-4:
+    container: ubuntu:bionic
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+
+    steps:
+      - uses: antmicro/f4pga-arch-defs/composite-uses@umarcor/runner/mwes
