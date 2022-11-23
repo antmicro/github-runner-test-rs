@@ -61,8 +61,12 @@ jobs:
     - run: echo test4
     - run: echo test5
     - run: echo test6
-    - run: GITHUB_ENV_TEST=1 >> $GITHUB_ENV
-    - run: echo $GITHUB_ENV_TEST
+    - run: |
+        echo 'GITHUB_ENV_TEST=1' >> $GITHUB_ENV
+        cat $GITHUB_ENV
+    - run: |
+        echo $GITHUB_ENV_TEST
+        cat $GITHUB_ENV
     - run: ln -s /root/work/test.txt /root/work/test2.txt
     - run: touch /etc/test && ln -s /etc/test /root/work/test3.txt
     - run: ln -s /root/work/test.txt /root/work/text4.txt
