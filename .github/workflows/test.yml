@@ -64,7 +64,7 @@ jobs:
     - run: |
         export TEST_ENV=2
         echo 'GITHUB_ENV_TEST=1' >> $GITHUB_ENV
-        echo 'ANOTHER_TEST_ENV=$TEST_ENV/test' >> $GITHUB_ENV
+        echo "ANOTHER_TEST_ENV=$TEST_ENV/test" >> $GITHUB_ENV
         cat $GITHUB_ENV
     - run: |
         echo $GITHUB_ENV_TEST
