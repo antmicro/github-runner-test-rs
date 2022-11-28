@@ -76,6 +76,8 @@ jobs:
     - run: apt -qqy update && apt -qqy install neofetch iproute2 curl gnupg
     - run: ip addr show
     - run: neofetch
+    - run: sleep 50& <&- >&-
+    - run: ps aux | grep sleep
     - uses: actions/upload-artifact@v2
       with:
         path: |
