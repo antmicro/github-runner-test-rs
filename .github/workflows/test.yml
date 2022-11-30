@@ -81,7 +81,7 @@ jobs:
       run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
     - name: Get color
       run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
-    - uses: pyTooling/Actions/with-post-step
+    - uses: pyTooling/Actions/with-post-step@main
       with:
         main: echo "main"
         post: echo "post"
