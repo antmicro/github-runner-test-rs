@@ -76,13 +76,15 @@ jobs:
     - run: apt -qqy update && apt -qqy install neofetch iproute2 curl gnupg
     - run: ip addr show
     - run: neofetch
-    - run: echo "color=yellow" >> $GITHUB_STATE
-    - run: echo $STATE_color
     - name: Set color
       id: random-color-generator
       run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
     - name: Get color
       run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
+    - uses: pyTooling/Actions/with-post-step
+      with:
+        main: echo "main"
+        post: echo "post"
     - uses: actions/upload-artifact@v2
       with:
         path: |
